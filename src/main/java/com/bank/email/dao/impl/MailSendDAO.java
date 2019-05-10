@@ -22,6 +22,7 @@ public class MailSendDAO {
             Email email = getEmail(requestModel);
             email.setMsg(requestModel.getName() + " " + requestModel.getSurname() + " adlı kullanıcıya para gönderim talebiniz alınmıştır.");
             email.addTo(requestModel.getAccountMail());
+            email.setSubject(requestModel.getType() + " gönderimi alındı");
             email.send();
         } catch (Exception ex) {
             LOGGER.error("Unable to send email", ex);
@@ -33,6 +34,7 @@ public class MailSendDAO {
             Email email = getEmail(requestModel);
             email.setMsg(requestModel.getName() + " " + requestModel.getSurname() + " adlı kullanıcıya para gönderim talebiniz tamamlandı.");
             email.addTo(requestModel.getAccountMail());
+            email.setSubject(requestModel.getType() + " gönderimi tamamlandı");
             email.send();
         } catch (Exception ex) {
             LOGGER.error("Unable to send email", ex);
@@ -45,6 +47,7 @@ public class MailSendDAO {
             email.setMsg(requestModel.getName() + " " + requestModel.getSurname() + " adlı kullanıcıya para gönderim talebiniz tamamlanmadı." +
                     " Detaylı bilgi için müşteri hizmetlerini arayabilirsiniz.");
             email.addTo(requestModel.getAccountMail());
+            email.setSubject(requestModel.getType() + " gönderimi hatası");
             email.send();
         } catch (Exception ex) {
             LOGGER.error("Unable to send email", ex);
@@ -56,6 +59,7 @@ public class MailSendDAO {
             Email email = getEmail(requestModel);
             email.setMsg(requestModel.getModule() + " adlı moduldeki " + requestModel.getId() + " idli işlem hata almaktadır.");
             email.addTo(ApplicationProperties.getProperty("app.default.mail"));
+            email.setSubject("Uygulama hatası");
             email.send();
         } catch (Exception ex) {
             LOGGER.error("Unable to send email", ex);
@@ -70,7 +74,6 @@ public class MailSendDAO {
         email.setAuthenticator(new DefaultAuthenticator("ogz.khrmn52@gmail.com", "oguz123oguz"));
         email.setSSLOnConnect(SSL_FLAG);
         email.setFrom("bank@bank.com");
-        email.setSubject(requestModel.getType() + " gönderimi alındı");
         return email;
     }
 
