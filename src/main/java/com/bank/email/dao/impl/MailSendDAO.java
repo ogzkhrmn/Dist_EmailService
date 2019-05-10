@@ -1,5 +1,6 @@
 package com.bank.email.dao.impl;
 
+import com.bank.email.core.ApplicationProperties;
 import com.bank.email.model.RequestModel;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
@@ -32,6 +33,29 @@ public class MailSendDAO {
             Email email = getEmail(requestModel);
             email.setMsg(requestModel.getName() + " " + requestModel.getSurname() + " adlı kullanıcıya para gönderim talebiniz tamamlandı.");
             email.addTo(requestModel.getAccountMail());
+            email.send();
+        } catch (Exception ex) {
+            LOGGER.error("Unable to send email", ex);
+        }
+    }
+
+    public void sendErrortoUser(RequestModel requestModel) {
+        try {
+            Email email = getEmail(requestModel);
+            email.setMsg(requestModel.getName() + " " + requestModel.getSurname() + " adlı kullanıcıya para gönderim talebiniz tamamlanmadı." +
+                    " Detaylı bilgi için müşteri hizmetlerini arayabilirsiniz.");
+            email.addTo(requestModel.getAccountMail());
+            email.send();
+        } catch (Exception ex) {
+            LOGGER.error("Unable to send email", ex);
+        }
+    }
+
+    public void sendErrorMail(RequestModel requestModel) {
+        try {
+            Email email = getEmail(requestModel);
+            email.setMsg(requestModel.getModule() + " adlı moduldeki " + requestModel.getId() + " idli işlem hata almaktadır.");
+            email.addTo(ApplicationProperties.getProperty("app.default.mail"));
             email.send();
         } catch (Exception ex) {
             LOGGER.error("Unable to send email", ex);

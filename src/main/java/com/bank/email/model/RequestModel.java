@@ -11,6 +11,8 @@ public class RequestModel implements Serializable {
     private String name;
     private String surname;
     private String type;
+    private String module;
+    private String id;
 
     public String getAccountMail() {
         return accountMail;
@@ -42,5 +44,21 @@ public class RequestModel implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

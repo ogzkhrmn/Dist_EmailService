@@ -32,6 +32,24 @@ public class EMailService implements Serializable {
     }
 
     @POST
+    @Path("/sendErrortoUser")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void sendErrortoUser(RequestModel request) {
+        MailSendDAO mailSendDAO = new MailSendDAO();
+        mailSendDAO.sendErrortoUser(request);
+    }
+
+    @POST
+    @Path("/sendErrorMail")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void sendErrorMail(RequestModel request) {
+        MailSendDAO mailSendDAO = new MailSendDAO();
+        mailSendDAO.sendErrorMail(request);
+    }
+
+    @POST
     @Path("/control")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
