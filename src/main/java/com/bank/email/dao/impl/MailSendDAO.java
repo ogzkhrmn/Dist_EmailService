@@ -66,6 +66,18 @@ public class MailSendDAO {
         }
     }
 
+    public void generalControl(RequestModel requestModel) {
+        try {
+            Email email = getEmail(requestModel);
+            email.setMsg(requestModel.getModule() + " adlı modulun calismasi durdu.");
+            email.addTo(ApplicationProperties.getProperty("app.default.mail"));
+            email.setSubject("Uygulama hatası");
+            email.send();
+        } catch (Exception ex) {
+            LOGGER.error("Unable to send email", ex);
+        }
+    }
+
     private Email getEmail(RequestModel requestModel) throws EmailException {
         Email email = new SimpleEmail();
         email.setCharset(org.apache.commons.mail.EmailConstants.UTF_8);
